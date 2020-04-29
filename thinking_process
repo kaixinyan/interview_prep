@@ -1,28 +1,38 @@
 Maximum-sum contiguous subarray (L53)
 input: [-2,1,-3,4,-1,2,1,-5,4]
 output: 6
-Solution: 
-A. brute force a. list all possible subarrays b. find their sums
-	a1.start from first element, extend until reaching the right end of the subarray;
-		 start from second element, extend until reaching the right end of the subarray;
-		 ...
+Solution: a. list all possible subarrays b. compare their sums
+A. brute force: a. list them however you want b. find all their sums and compare them
+	a. start from first element, extend until reaching the right end of the subarray;
+	   start from second element, extend until reaching the right end of the subarray;
+	   ...
 		 [-2],[-2,1],...,[-2,1,...,4];
 		 [1],[1,-3],...,[1,...,4];
 		 ...;
 		 [4]
-		 
-	b1.for each fixed left-ended subarray, compute the latter sum on top of ealier sum O(n^2)
+	p.s. each line list all possible subarrays starting from each element	 
+	b. for each fixed left-ended subarray, compute the latter sum on top of ealier sum O(n^2)
+	[explanation of O(n^2): in the process of finding all possible subarrays [l_i,l_j], both i and j run thru 0 to n-1]
 	
-	a2.end at first element;
-		 end at second element, extend until reaching the left end of the subarray;
-		 ...
+B. dynamic programming: a. list them progressively, forming new subarrays on top of existing subarrays 
+   						b. record answer to existing subarrays, deduce answer to new subarrays
+	a. end at first element;
+	   end at second element, extend until reaching the left end of the subarray;
+	   ...
 		 [-2];
-		 [1],[-2,1];
-		 [-3],[1,-3],[-2,1,-3];
+		 [-2,1],[1];
+		 [-2,1,-3],[1,-3],[-3],;
 		 ...;
-		 [4],...,[-2,1,...,4]
-	
-	b2. If we know the answer to the previous line, what will the answer be for the next line?
+		 [-2,1,...,4],...,[4]
+	p.s. each line list all possible subarrays ending at each element
+	[how to come up with this formation: if the input list become longer, i.e. a number is appended in the end, and we know
+	 the answer to the original input, what will the answer be to the longer input?]
+	b. If we know the answer to the previous line, what will the answer be to the current line? Furthermore, shall we 
+	    build the answer on top of the previous one or shall we start over? We should choose whichever is bigger.
+		[explanation why it works: first of all, it exhausts all possible subarrays; second, the way we carry over 
+		 to current line is to glue the current element to each list of the previous line, plus [current element] itself;
+		 third, if we know the max sum of previous line, the max sum of current line should be either that max
+		 plus current element or the current element, based on how we build the lists from line to line]
 	
 			
 			
